@@ -23,6 +23,7 @@ int main()
     { 
         static Apple obj; 
     } 
+    // cout << obj.i << endl;
     cout << "End of main\n"; 
 } 
 
