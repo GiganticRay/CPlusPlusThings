@@ -95,6 +95,7 @@ const char * const a; //指向const对象的const指针。
 ```
 
 > **小结：** <br>
+> self: **指向常量的指针与常指针可不一样**<br>
 > 如果*const*位于`*`的左侧，则const就是用来修饰指针所指向的变量，即指针指向为常量；<br>如果const位于`*`的右侧，*const*就是修饰指针本身，即指针本身是常量。
 
 具体使用如下：
@@ -164,7 +165,8 @@ int main(){
 using namespace std;
 int main(){
     const int num=0;
-    int * const ptr=&num; //error! const int* -> int*
+    int * const ptr=&num;   //error! const int* -> int*   
+                            // const is functioned on ptr, so ptr is const point into a int object
     cout<<*ptr<<endl;
 }
 ```
@@ -202,7 +204,7 @@ const int func1();
 const int* func2();
 ```
 
-指针指向的内容不变。
+指针指向的内容不变。 ???
 
 （3）int *const
 
@@ -253,16 +255,20 @@ void func(const A &a)。
 
 > 小结：<br>1.对于非内部数据类型的输入参数，应该将“值传递”的方式改为“const 引用传递”，目的是提高效率。例如将void func(A a) 改为void func(const A &a)。<br><br>2.对于内部数据类型的输入参数，不要将“值传递”的方式改为“const 引用传递”。否则既达不到提高效率的目的，又降低了函数的可理解性。例如void func(int x) 不应该改为void func(const int &x)。</font></p>
 
-以上解决了两个面试问题：
+以上解决了两个**面试问题**：
 
 + 如果函数需要传入一个指针，是否需要为该指针加上const，把const加在指针不同的位置有什么区别；
 + 如果写的函数需要传入的参数是一个复杂类型的实例，传入值参数或者引用参数有什么区别，什么时候需要为传入的引用参数加上const。 
 
 ## 7.类中使用const
+>self: 注意，类中的成员函数使用```const```, 与普通函数使用const，是截然不同的两种概念，编译器内部处理也不尽相同。不相同的地方是 ```const```所放置位置的不同，类中的成员函数使用 const 的时候，会把 cosnt 放到括号的后面，表示修饰的是 this 指针。
 
-在一个类中，任何不会修改数据成员的函数都应该声明为const类型。如果在编写const成员函数时，不慎修改 数据成员，或者调用了其它非const成员函数，编译器将指出错误，这无疑会提高程序的健壮性。
+在一个类中，任何**不会修改成员属性的函数**都应该声明为const类型。如果在编写const成员函数时，不慎修改 数据成员，或者调用了其它非const成员函数，编译器将指出错误，这无疑会提高程序的健壮性。
 
-使用const关键字进行说明的成员函数，称为常成员函数。只有常成员函数才有资格操作常量或常对象，没有使用const关键字进行说明的成员函数不能用来操作常对象。
+使用const关键字进行说明的成员函数，称为常成员函数。**只有常成员函数才有资格操作常量或常对象**，没有使用const关键字进行说明的成员函数不能用来操作常对象。
+
+> self: 那请问常成员函数可以操作普通成员变量吗? 这里操作的定义是什么呢？常量本来就不能被修改啊，还是说获取也属于操作呢？ <br>
+回答：操作，我理解的是改变，所以上述常成员函数才能操作常量，本身就是病句。反正需要记住的是，常成员函数 const 的位置，是放到最右边的，去修饰 this.
 
 对于类中的const成员变量必须通过初始化列表进行初始化，如下所示：
 
@@ -281,7 +287,8 @@ Apple::Apple(int i):apple_number(i)
 }
 ```
 
-const对象只能访问const成员函数,而非const对象可以访问任意的成员函数,包括const成员函数.
+**const对象只能访问const成员函数,而非const对象可以访问任意的成员函数,包括const成员函数.**
+>why: 合理，因为 const 对象要求对象本身不可改变，所以其不能调用非 const 成员函数防止该非 const 成员函数修改属性值。而 非 const 对象则没有这种顾虑。
 
 例如：
 
@@ -305,7 +312,7 @@ public:
 #include"apple.cpp"
 using namespace std;
 
-Apple::Apple(int i):apple_number(i)
+Apple::Apple(int i):apple_number(i) //  初始化列表
 {
 
 }
@@ -378,7 +385,7 @@ const int apple_number=10;
 
 这里提到了static，下面简单的说一下：
 
-在C++中，static静态成员变量不能在类的内部初始化。在类的内部只是声明，定义必须在类定义体的外部，通常在类的实现文件中初始化。
+在C++中，**static静态成员变量不能在类的内部初始化**。在类的内部只是声明，定义必须在类定义体的外部，通常在类的实现文件中初始化。
 
 在类中声明：
 

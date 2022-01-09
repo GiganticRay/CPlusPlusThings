@@ -5,9 +5,12 @@ private:
 public:
     Apple(int i);
     const int apple_number;
+    int intership_numer;
     void take(int num) const;
     int add(int num);
     int add(int num) const;
     int getCount() const;
+    void non_const_func();
+    void const_func() const;
 };
 
