@@ -1,6 +1,5 @@
 /* Compile code with optimization option */
 #include <stdio.h> 
-
 int main(void) 
 { 
     const volatile int local = 10; 

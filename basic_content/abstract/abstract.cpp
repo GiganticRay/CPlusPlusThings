@@ -21,7 +21,7 @@ public:
     void f(){ cout<<"B:f()"<<endl;}
 };
 int main(){
-    B b;
+    B b;    // 如果基类 A 再多一个纯虚函数，这个 B 就不能够实例化了
     b.g();
     return 0;
 }

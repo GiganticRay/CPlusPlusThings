@@ -12,8 +12,10 @@ using namespace std;
 class A
 {
     public:
-        char b;
+        char a;
+        // char b;
         virtual void fun() {};
+        virtual void fun2() {};
         static int c;
         static int d;
         static int f;

@@ -8,7 +8,7 @@
 
 ## 1.C中struct
 
-- 在C中struct只单纯的用作数据的复合类型，也就是说，在结构体声明中只能将数据成员放在里面，而不能将函数放在里面。 
+- 在C中struct只单纯的**用作数据的复合类型**，也就是说，在结构体声明中**只能**将数据成员放在里面，而**不能**将函数放在里面。 
 - 在C结构体声明中不能使用C++访问修饰符，如：public、protected、private 而在C++中可以使用。
 - 在C中定义结构体变量，如果使用了下面定义必须加struct。
 - C的结构体不能继承（没有这一概念）。
@@ -58,10 +58,10 @@ I am Base func
 
 与C对比如下：
 
-- C++结构体中不仅可以定义数据，还可以定义函数。
-- C++结构体中可以使用访问修饰符，如：public、protected、private 。
-- C++结构体使用可以直接使用不带struct。
-- C++继承
+- C++结构体中不仅可以定义数据，**还可以定义函数**。
+- C++结构体中**可以使用访问修饰符**，如：public、protected、private 。
+- C++结构体使用可以直接使用**不带struct**。
+- C++继承 self: (**struct 也可以继承？**)
 - 若结构体的名字与函数名相同，可以正常运行且正常的调用！但是定义结构体变量时候只用用带struct的！
 
 例如：
@@ -74,7 +74,7 @@ I am Base func
 struct Student {
     
 };
-Student(){}
+// Student(){}
 Struct Student s; //ok
 Student s;  //ok
 ```
@@ -114,7 +114,7 @@ typedef struct Base1 {
 
 struct Base {         
     int v1;
-//    private:   //error!
+//    private:   //error!, 这个error不是说不可以定义为 private, 而是说定义为 private 后在结构体外部不能够对其进行访问了
         int v3;
     public:     //显示声明public
         int v2;
@@ -214,6 +214,7 @@ int main() {
 }
 ```
 完整代码见：[struct_func_func.cpp](./struct_func_func.cpp)
+> self: 用 typedef 定义为别名的符号，不能够用来定义函数
 
 ## 3.总结
 

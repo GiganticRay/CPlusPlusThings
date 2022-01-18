@@ -9,6 +9,46 @@
 - 虚函数继承，不管是单继承还是多继承，都是继承了基类的vptr。(32位操作系统4字节，64位操作系统 8字节)！
 - 虚继承,继承基类的vptr。
 
+## 0.sizeof Baisc
+```c++
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    cout << "sizeof(int)" << sizeof(int) << endl;
+    cout << "sizeof(char)" << sizeof(char) << endl;
+    cout << "sizeof(float)" << sizeof(float) << endl;
+    cout << "sizeof(double)" << sizeof(double) << endl;
+    cout << "sizeof(short)" << sizeof(short) << endl;
+    cout << "sizeof(long)" << sizeof(long) << endl;
+    int* a;
+    double* b;
+    char* c;
+    cout << "sizeof(char*)" << sizeof(c) << endl;
+    cout << "sizeof(int*)" << sizeof(a) << endl;
+    cout << "sizeof(char*)" << sizeof(c) << endl;
+}
+
+result:
+sizeof(int)4
+sizeof(char)1
+sizeof(float)4
+sizeof(double)8
+sizeof(short)2
+sizeof(long)8
+sizeof(char*)8
+sizeof(int*)8
+sizeof(char*)8
+```
+
+### 字节对齐的原则（64位操作系统）
++ https://blog.csdn.net/liukun321/article/details/6974282
++ 结构体中元素是按照定义顺序一个一个放到内存中去的，但并不是紧密排列的。从结构体存储的首地址开始，每一个元素放置到内存中时，它都会认为内存是以它自己的大小来划分的，因此元素放置的位置一定会在自己宽度的整数倍上开始（以结构体变量首地址为0计算）。
++ 原则二：在经过第一原则分析后，检查计算出的存储单元是否为所有元素中最宽的元素的长度的整数倍，是，则结束；若不是，则补齐为它的整数倍。
+
 ## 1.原则1
 
 ```c++
@@ -45,8 +85,9 @@ using namespace std;
 class A
 {
     public:
-        char b;
-        virtual void fun() {};
+        char b; // 1字节
+        virtual void fun() {};  // 8字节
+        virtual void fun2() {};
         static int c;
         static int d;
         static int f;
@@ -113,11 +154,11 @@ class A
 
 /**
  * @brief 此时B按照顺序：
- * char a
- * int b
- * short a
- * long b
- * 根据字节对齐4+4=8+8+8=24
+ * char a   1
+ * int b    4
+ * short a  2
+ * long b   8
+ * 根据字节对齐: 1(3) + 4 + 2(6) + 8 = 24
  */
 class B:A
 {
@@ -125,7 +166,7 @@ class B:A
         short a;
         long b;
 };
-class C
+class C // self: 为什么这里不是 8 + 1(7) = 16吗，为啥是12呢。答：当下面有类对象时，C++底层再存储时不会将这个类对象看作类的一个元素，其还是会将这个类对象分解开来，即 char, int, char. 所以是 1(3) + 4 + 1(3) = 12
 {
     A a;
     char c;

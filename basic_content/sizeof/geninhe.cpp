@@ -25,7 +25,7 @@ class A
  * int b
  * short a
  * long b
- * 根据字节对齐4+4=8+8+8=24
+ * 根据字节对齐4+4+8+8=24
  */
 class B:A
 {
