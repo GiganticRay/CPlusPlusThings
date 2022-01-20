@@ -6,6 +6,9 @@
 
 ![](../img/wechat.jpg)
 
+## 0.宏介绍
+https://www.cnblogs.com/sewain/p/14383280.html
+
 ## 1.宏中包含特殊符号
 
 分为几种：`#`，`##`，`\`

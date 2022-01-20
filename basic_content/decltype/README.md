@@ -9,16 +9,16 @@
 ## 1.基本使用
 decltype的语法是:
 
-```
+```c++
 decltype (expression)
 ```
 
-这里的括号是必不可少的,decltype的作用是“查询表达式的类型”，因此，上面语句的效果是，返回 expression 表达式的类型。注意，decltype 仅仅“查询”表达式的类型，并不会对表达式进行“求值”。
+这里的括号是必不可少的,decltype的作用是“查询表达式的类型”，因此，上面语句的效果是，返回 expression 表达式的类型。注意，decltype 仅仅“**查询**”表达式的类型，并不会对表达式进行“**求值**”。
 
 
 ### 1.1 推导出表达式类型
 
-```
+```c++
 int i = 4;
 decltype(i) a; //推导结果为int。a的类型为int。
 ```
@@ -59,7 +59,9 @@ decltype(anon_s) as ;//定义了一个上面匿名的结构体
 
 ### 1.4 泛型编程中结合auto，用于追踪函数的返回值类型
 
-这也是decltype最大的用途了。
+[arrow](https://stackoverflow.com/questions/22514855/arrow-operator-in-function-heading)
+
+这也是decltype**最大的用途了。**
 
 ```c++
 template <typename T>

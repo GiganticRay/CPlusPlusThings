@@ -9,11 +9,11 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
 /**
  * 泛型编程中结合auto，用于追踪函数的返回值类型
  */
 template <typename T>
-
 auto multiply(T x, T y)->decltype(x*y)
 {
     return x*y;
@@ -37,6 +37,7 @@ int main()
         cout<<"NULL"<<endl;
 
 
+    // 这样就不用每次繁琐地去写长长的 vector<int>::iterator it 了
     typedef decltype(vec.begin()) vectype;
 
     for(vectype i=vec.begin();i!=vec.end();i++)

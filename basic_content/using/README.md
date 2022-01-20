@@ -51,18 +51,18 @@ int main()
 完整代码见：[using_global.cpp](using_global.cpp)
 ## 改变访问性
 
-```
+```c++
 class Base{
-public:
- std::size_t size() const { return n;  }
-protected:
- std::size_t n;
+    public:
+        std::size_t size() const { return n;  }
+    protected:
+        std::size_t n;
 };
 class Derived : private Base {
-public:
- using Base::size;
-protected:
- using Base::n;
+    public:
+        using Base::size;
+    protected:
+        using Base::n;
 };
 ```
 
@@ -70,9 +70,10 @@ protected:
 完整代码见：[derived_base.cpp](derived_base.cpp)
 ## 函数重载
 
-在继承过程中，派生类可以覆盖重载函数的0个或多个实例，一旦定义了一个重载版本，那么其他的重载版本都会变为不可见。
+在继承过程中，派生类可以覆盖重载函数的0个或多个实例，**一旦定义了一个重载版本，那么其他的重载版本都会变为不可见。**
+> self: 这个现象叫做，**name hidding**， [stack](https://stackoverflow.com/questions/1628768/why-does-an-overridden-function-in-the-derived-class-hide-other-overloads-of-the)告诉了我们为什么要这样改。 这相当于一个设计拖鞋，不然可能会引起混乱
 
-如果对于基类的重载函数，我们需要在派生类中修改一个，又要让其他的保持可见，必须要重载所有版本，这样十分的繁琐。
+如果对于基类的重载函数，我们需要在派生类中修改一个，**又要让其他的保持可见**，必须要重载所有版本，这样十分的繁琐。
 
 ```c++
 #include <iostream>
@@ -104,7 +105,7 @@ int main()
     return 0;
 }
 ```
-如上代码中，在派生类中使用using声明语句指定一个名字而不指定形参列表，所以一条基类成员函数的using声明语句就可以把该函数的所有重载实例添加到派生类的作用域中。此时，派生类只需要定义其特有的函数就行了，而无需为继承而来的其他函数重新定义。
+如上代码中，在派生类中使用using声明语句**指定一个名字而不指定形参列表**，所以一条基类成员函数的using声明语句就**可以把该函数的所有重载实例**添加到派生类的作用域中。此时，派生类只需要定义其特有的函数就行了，而无需为继承而来的其他函数重新定义。
 
 完整代码见：[using_derived.cpp](using_derived.cpp)
 ## 取代typedef

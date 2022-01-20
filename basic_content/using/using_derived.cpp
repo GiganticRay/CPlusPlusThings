@@ -20,7 +20,7 @@ class Base{
 
 class Derived : private Base {
     public:
-        using Base::f;
+        // using Base::f;
         void f(int n){
             cout<<"Derived::f(int)"<<endl;
         }
@@ -30,7 +30,7 @@ int main()
 {
     Base b;
     Derived d;
-    d.f();
+    // d.f(); error: 就算 derived 继承了 Base, 但是 Derived 类中实现的一个函数重载会覆盖掉其他函数重载，所以要使用 using Base::f 使其可见
     d.f(1);
     return 0;
 }
